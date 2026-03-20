@@ -1,1 +1,6 @@
+openai
+python-dotenv
+requests
 yfinance
+
+#pip install -r requirements.txt

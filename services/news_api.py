@@ -1,8 +1,11 @@
-
-
+import os
 import requests
+from dotenv import load_dotenv
 
-API_KEY = "2b778f0f270e45eab20a6fd8baf0262c"
+load_dotenv()
+
+API_KEY = os.getenv("NEWS_API_KEY")
+
 
 def get_news(query):
     url = f"https://newsapi.org/v2/everything?q={query}&apiKey={API_KEY}"
