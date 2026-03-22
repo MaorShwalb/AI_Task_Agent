@@ -3,20 +3,11 @@
 from agent.planner import plan
 from agent.executor import execute
 
+#option: Get QQQ price and news
 task = "Get QQQ price and news"
 
 steps = plan(task)
-results = execute(steps)
+results = execute(steps, task)
 
 print("Task:", task)
 print("Results:", results)
-
-
-
-"""
-data = get_stock_price("QQQ")
-news = get_news("QQQ")
-
-print("Price:", data)
-print("News:", news)
-"""
