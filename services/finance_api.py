@@ -10,8 +10,8 @@ def get_stock_price(symbol):
     latest = data.iloc[-1]
 
     return {
-        "price": latest["Close"],
-        "open": latest["Open"],
-        "high": latest["High"],
-        "low": latest["Low"]
+        "price": float(latest["Close"]),
+        "open": float(latest["Open"]),
+        "high": float(latest["High"]),
+        "low": float(latest["Low"])
     }
