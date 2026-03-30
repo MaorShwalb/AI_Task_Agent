@@ -21,12 +21,23 @@ def tool_get_news(task):
 
 
 def tool_ai_chat(task):
-    return ask_groq(task)
+    return {
+        "ai_response": ask_groq(task)
+    }
 
 
 # Tool Registry
 TOOLS = {
-    "get_price": tool_get_price,
-    "get_news": tool_get_news,
-    "ai_chat": tool_ai_chat
+    "get_price": {
+        "function": tool_get_price,
+        "description": "Get current stock price including open, high, low, and close values"
+    },
+    "get_news": {
+        "function": tool_get_news,
+        "description": "Get latest news headlines about the stock and provide a summary"
+    },
+    "ai_chat": {
+        "function": tool_ai_chat,
+        "description": "Answer general questions or provide explanations using AI"
+    }
 }

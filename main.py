@@ -6,7 +6,7 @@ from pprint import pprint #for lines prints
 
 '''option: Get QQQ price and news
            Tell me what's happening with tech stocks'''
-task = "Get QQQ price and news"
+task = "Tell me what's happening with tech stocks"
 
 steps = plan(task)
 results = execute(steps, task)

@@ -1,33 +1,48 @@
 
 from agent.ai_utils import ask_groq
+from agent.tools import TOOLS
 import json
 import re
 
-'''was: User → Code (if rules) → Steps → Execute
-   now its: User → AI (LLM) → Steps → Execute'''
+
 def extract_json(text):
-    """Extract JSON array from LLM response"""
     match = re.search(r'\[.*\]', text, re.DOTALL)
     if match:
         return match.group(0)
     return None
 
 
-def plan(task):
-    prompt = f"""
-    You are an AI planner.
+def build_tools_description():
+    """
+    Build tools description dynamically from TOOLS registry
+    """
+    description = ""
 
-    Your job is to break down a user request into steps.
+    for name, tool_data in TOOLS.items():
+        description += f"- {name}: {tool_data['description']}\n"
+
+    return description
+
+
+def plan(task):
+    tools_description = build_tools_description()
+
+    prompt = f"""
+    You are an AI agent planner.
+
+    Your job is to decide which tools to use to complete a task.
 
     Available tools:
-    - get_price → get stock price
-    - get_news → get latest news
-    - ai_chat → general AI response
+    {tools_description}
 
     Rules:
     - Return ONLY a JSON array
     - Do NOT explain anything
-    - Example output: ["get_price", "get_news"]
+    - Use only the tools listed above
+
+    Example:
+    Task: Get QQQ price and news
+    Output: ["get_price", "get_news"]
 
     Task: {task}
     """
@@ -43,7 +58,7 @@ def plan(task):
         steps = json.loads(json_text)
         return steps
 
-    except Exception as e:
+    except Exception:
         print("⚠️ Failed to parse LLM response:", response)
         return []
 
