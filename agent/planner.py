@@ -6,9 +6,10 @@ import re
 
 
 def extract_json(text):
-    match = re.search(r'\[.*\]', text, re.DOTALL)
-    if match:
-        return match.group(0)
+    matches = re.findall(r'\[.*?\]', text, re.DOTALL)
+    if matches:
+        return matches[-1]  # לוקח את האחרון בלבד
+
     return None
 
 
@@ -29,21 +30,35 @@ def plan(task):
 
     prompt = f"""
     You are an AI agent planner.
-
-    Your job is to decide which tools to use to complete a task.
-
+    
+    Your job is to decide which tools to use and with what arguments.
+    
     Available tools:
     {tools_description}
-
+    
     Rules:
     - Return ONLY a JSON array
-    - Do NOT explain anything
+    - Each step must include:
+      - tool
+      - args (dictionary)
     - Use only the tools listed above
-
+    - Do NOT explain anything
+    
+    IMPORTANT:
+    - If the task is about a stock or company (like Tesla, Nvidia, Apple):
+      ALWAYS use:
+      1. get_price
+      2. get_news
+    - Do NOT use ai_chat for stock analysis if data tools are available
+    
     Example:
-    Task: Get QQQ price and news
-    Output: ["get_price", "get_news"]
-
+    Task: What's happening with Tesla stock?
+    Output:
+    [
+      {{"tool": "get_price", "args": {{"symbol": "TSLA"}}}},
+      {{"tool": "get_news", "args": {{"symbol": "TSLA"}}}}
+    ]
+    
     Task: {task}
     """
 
@@ -61,22 +76,3 @@ def plan(task):
     except Exception:
         print("⚠️ Failed to parse LLM response:", response)
         return []
-
-
-'''def plan(task):
-    """
-    מקבל מחרוזת משימה ומחזיר רשימת צעדים
-    """
-    steps = []
-    task_lower = task.lower()
-
-    if "price" in task_lower or "qqq" in task_lower:
-        steps.append("get_price")
-
-    if "news" in task_lower:
-        steps.append("get_news")
-
-    if "summarize" in task_lower or "explain" in task_lower:
-        steps.append("ai_chat")
-
-    return steps'''

@@ -5,8 +5,15 @@ from agent.executor import execute
 from pprint import pprint #for lines prints
 
 '''option: Get QQQ price and news
-           Tell me what's happening with tech stocks'''
-task = "Tell me what's happening with tech stocks"
+           Tell me what's happening with tech stocks
+           
+           task = "What's happening with Nvidia stock?"
+            task = "Tell me about Apple"
+            task = "TSLA news"
+            task = "What's up with Microsoft stock?"
+           
+           '''
+task = "tell me about s&p news"
 
 steps = plan(task)
 results = execute(steps, task)

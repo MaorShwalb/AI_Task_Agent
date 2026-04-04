@@ -5,23 +5,28 @@ def execute(steps, task):
     results = {}
 
     for step in steps:
-        tool_data = TOOLS.get(step)
+        # נשלוף שם tool והפרמטרים
+        tool_name = step.get("tool")
+        args = step.get("args", {})
+
+        tool_data = TOOLS.get(tool_name)
 
         if not tool_data:
-            print(f"⚠️ Unknown tool: {step}")
+            print(f"⚠️ Unknown tool: {tool_name}")
             continue
 
         tool_function = tool_data["function"]
 
         try:
-            result = tool_function(task)
+            # העברת args דינמית
+            result = tool_function(task, **args)
 
             if isinstance(result, dict):
                 results.update(result)
             else:
-                results[step] = result
+                results[tool_name] = result
 
         except Exception as e:
-            print(f"❌ Error in tool {step}: {e}")
+            print(f"❌ Error in tool {tool_name}: {e}")
 
     return results
