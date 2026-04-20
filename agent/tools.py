@@ -12,7 +12,11 @@ COMPANY_TO_SYMBOL = {
     "microsoft": "MSFT",
     "amazon": "AMZN",
     "google": "GOOGL",
-    "meta": "META"
+    "meta": "META",
+    "s&p": "SPY",
+    "s&p 500": "SPY",
+    "sp500": "SPY",
+    "spy": "SPY"
 }
 
 

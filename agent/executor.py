@@ -1,5 +1,5 @@
 
-from agent.tools import TOOLS
+'''from agent.tools import TOOLS
 
 def execute(steps, task):
     results = {}
@@ -29,4 +29,4 @@ def execute(steps, task):
         except Exception as e:
             print(f"❌ Error in tool {tool_name}: {e}")
 
-    return results
+    return results'''

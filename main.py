@@ -1,26 +1,12 @@
+from agent.react_agent import run_react_agent
 
+while True:
+    task = input("\nYou: ")
 
-from agent.planner import plan
-from agent.executor import execute
-from pprint import pprint #for lines prints
+    if task.lower() in ["exit", "quit"]:
+        break
 
-'''option: Get QQQ price and news
-           Tell me what's happening with tech stocks
-           
-           task = "What's happening with Nvidia stock?"
-            task = "Tell me about Apple"
-            task = "TSLA news"
-            task = "What's up with Microsoft stock?"
-           
-           '''
-task = "tell me about s&p news"
+    result = run_react_agent(task)
 
-steps = plan(task)
-results = execute(steps, task)
-
-print("Task:", task)
-#print("Results:", results)
-
-#print(results["news_summary"].replace("\\n", "\n")) #dont print prices need to check
-
-pprint(results)
+    print("\nAgent:")
+    print(result)

@@ -1,4 +1,4 @@
-
+'''
 from agent.ai_utils import ask_groq
 from agent.tools import TOOLS
 import json
@@ -30,12 +30,12 @@ def plan(task):
 
     prompt = f"""
     You are an AI agent planner.
-    
+
     Your job is to decide which tools to use and with what arguments.
-    
+
     Available tools:
     {tools_description}
-    
+
     Rules:
     - Return ONLY a JSON array
     - Each step must include:
@@ -43,14 +43,14 @@ def plan(task):
       - args (dictionary)
     - Use only the tools listed above
     - Do NOT explain anything
-    
+
     IMPORTANT:
     - If the task is about a stock or company (like Tesla, Nvidia, Apple):
       ALWAYS use:
       1. get_price
       2. get_news
     - Do NOT use ai_chat for stock analysis if data tools are available
-    
+
     Example:
     Task: What's happening with Tesla stock?
     Output:
@@ -58,7 +58,7 @@ def plan(task):
       {{"tool": "get_price", "args": {{"symbol": "TSLA"}}}},
       {{"tool": "get_news", "args": {{"symbol": "TSLA"}}}}
     ]
-    
+
     Task: {task}
     """
 
@@ -75,4 +75,4 @@ def plan(task):
 
     except Exception:
         print("⚠️ Failed to parse LLM response:", response)
-        return []
+        return []'''
